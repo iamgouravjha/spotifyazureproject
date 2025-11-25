@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df-azure-factory"
+		},
+		"AzureSql_password": {
+			"value": ""
+		},
+		"datalake_accountKey": {
+			"value": ""
+		},
+		"AzureSql_properties_typeProperties_server": {
+			"value": "azureprojectservergourav.database.windows.net"
+		},
+		"AzureSql_properties_typeProperties_database": {
+			"value": "azurdatabase"
+		},
+		"AzureSql_properties_typeProperties_userName": {
+			"value": "admingourav"
+		},
+		"datalake_properties_typeProperties_url": {
+			"value": "https://azurestoragegourav.dfs.core.windows.net/"
+		}
+	}
+}
