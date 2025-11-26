@@ -8,6 +8,11 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.loop_input",
+						"type": "Expression"
+					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "AzureSQLToLake",
@@ -37,10 +42,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": {
-										"value": "select * from@{item().schema}.@{item().table} WHERE @{item().cdc_col}> '  @{if(empty(item().from_date),activity('last_cdc').output.value[0].cdc, item().from_date)}'",
-										"type": "Expression"
-									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -180,10 +181,13 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@pipeline().parameters.table",
+														"value": "@{item().table}",
 														"type": "Expression"
 													},
-													"file": "@concat (pipeline().parameters.table,'_',variables('current'))"
+													"file": {
+														"value": "@concat (item().table,'_',variables('current'))",
+														"type": "Expression"
+													}
 												}
 											},
 											"enableLogging": false,
@@ -253,7 +257,10 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"container": "bronze",
-													"folder": "cdc",
+													"folder": {
+														"value": "@{item().table}_cdc",
+														"type": "Expression"
+													},
 													"file": "empty.json"
 												}
 											}
